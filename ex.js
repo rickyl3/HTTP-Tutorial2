@@ -75,3 +75,11 @@ app.delete('/api/courses/:id', (req, res) => {
 app.listen(3000, () => {
     console.log('Listening on port 3000 ...');
 })
+
+// By using backend HTTP requests, different programs can communicate 
+// with each other by relaying information that is sent to one another. 
+// Each program can then utilize this type of information in order to 
+// perform their respective tasks. For example, in a music app, by clicking a 
+// button that adds a song to a playlist, it gets the array for that specific playlist 
+// and adds the song to it. Then, you can go to the playlist and when you press the play 
+// button, you are sending a request for the array of songs and ask it to play each song.
