@@ -28,27 +28,49 @@ app.get('/api/courses/:id', (req, res) => {
 
 // HTTP POST Requests
 app.post('/api/courses', (req,res) => {
-    // you write the if code here
-    //add an if statement so that the name of the course you post is .min(3) character
     let course;
     console.log(req.body.name.length);
     if (req.body.name.length > 3) {
         course = {
-            //we assign an ID and a name property
             id: courses.length +1,
             name:req.body.name
         }
+        courses.push(course);
+        res.send(course);
+        console.log(courses); 
+    } else {
+        res.status(404).send("Name is required and it should be a minimum of 4 characters");
     }
-    res.status(404).send("Name is required and it should be a minimum of 3 characters");
-    console.log(course);
-            //YOU WRITE THE NEXT LINES OF code
-          //next step: push it to the array
-            //next step: the server should return the new resource to the client in the body of the response
-    courses.push(course);
-    res.send(course);  
     });
 
-    
+// HTTP PUT Requests
+app.put('/api/courses/:id', (req, res) => {
+    console.log(courses);
+    originalCourse = courses[req.body.id - 1];
+    if (originalCourse !== undefined) {
+        newCourse = {
+            id: req.body.id,
+            name: req.body.name
+        }
+        courses[req.body.id - 1] = newCourse;
+        res.send(newCourse);
+        console.log(courses);
+    } else {
+        res.status(404).send("Course does not exist");
+    }
+});
+
+// HTTP DELETE Requests
+app.delete('/api/courses/:id', (req, res) => {
+    originalCourse = courses[req.body.id - 1];
+    index = courses.indexOf(originalCourse);
+    if (originalCourse !== undefined) {
+        courses.splice(index, 1);
+        res.send(originalCourse);
+    } else {
+        res.status(404).send("Course does not exist");
+    }
+})
 
 app.listen(3000, () => {
     console.log('Listening on port 3000 ...');
